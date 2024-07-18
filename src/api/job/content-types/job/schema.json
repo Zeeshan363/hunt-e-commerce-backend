@@ -1,0 +1,69 @@
+{
+  "kind": "collectionType",
+  "collectionName": "jobs",
+  "info": {
+    "singularName": "job",
+    "pluralName": "jobs",
+    "displayName": "job",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "jobTitle": {
+      "type": "string"
+    },
+    "jobCategory": {
+      "type": "enumeration",
+      "enum": [
+        "Design"
+      ]
+    },
+    "location": {
+      "type": "string"
+    },
+    "jobType": {
+      "type": "enumeration",
+      "enum": [
+        "FULL-TIME",
+        "PART-TIME"
+      ]
+    },
+    "jobLevel": {
+      "type": "enumeration",
+      "enum": [
+        "Internship",
+        "Entry Level",
+        "Associate",
+        "Mid Senor Level",
+        "Director"
+      ]
+    },
+    "education": {
+      "type": "string"
+    },
+    "companyName": {
+      "type": "string"
+    },
+    "jobDescription": {
+      "type": "text"
+    },
+    "companyLogo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "salaryRange": {
+      "type": "enumeration",
+      "enum": [
+        "Dollar 120k-150k",
+        "Dollar 151k-200k"
+      ]
+    }
+  }
+}

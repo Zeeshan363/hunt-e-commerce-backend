@@ -1,0 +1,64 @@
+{
+  "kind": "collectionType",
+  "collectionName": "companies",
+  "info": {
+    "singularName": "company",
+    "pluralName": "companies",
+    "displayName": "company"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "companyName": {
+      "type": "string"
+    },
+    "companyTagline": {
+      "type": "string"
+    },
+    "category": {
+      "type": "enumeration",
+      "enum": [
+        "Tech"
+      ]
+    },
+    "location": {
+      "type": "string"
+    },
+    "jobType": {
+      "type": "enumeration",
+      "enum": [
+        "Onsite",
+        "Remote",
+        "Hybrid"
+      ]
+    },
+    "employeeCount": {
+      "type": "enumeration",
+      "enum": [
+        "Emp 1-10",
+        "Emp 11-50",
+        "Emp 51-100",
+        "Emp 101-200"
+      ]
+    },
+    "description": {
+      "type": "text"
+    },
+    "companyLogo": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": true
+    },
+    "backgroundImage": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}
