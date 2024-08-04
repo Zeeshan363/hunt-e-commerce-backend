@@ -15,5 +15,10 @@ export default {
       path: "/job/apply-job",
       handler: "job.applyJob",
     },
+    {
+      method: "GET",
+      path: "/job/applied-jobs",
+      handler: "job.candidateAppliedJobs",
+    },
   ],
 };

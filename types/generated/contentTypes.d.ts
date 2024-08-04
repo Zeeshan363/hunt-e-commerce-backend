@@ -918,6 +918,7 @@ export interface ApiCompanyCompany extends Schema.CollectionType {
     singularName: 'company';
     pluralName: 'companies';
     displayName: 'company';
+    description: '';
   };
   options: {
     draftAndPublish: false;
@@ -934,6 +935,11 @@ export interface ApiCompanyCompany extends Schema.CollectionType {
     description: Attribute.Text;
     companyLogo: Attribute.Media<'images', true>;
     backgroundImage: Attribute.Media<'images'>;
+    job: Attribute.Relation<
+      'api::company.company',
+      'manyToMany',
+      'api::job.job'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -977,11 +983,18 @@ export interface ApiJobJob extends Schema.CollectionType {
     salaryRange: Attribute.Enumeration<
       ['Dollar 120k-150k', 'Dollar 151k-200k']
     >;
-    jobStatus: Attribute.Enumeration<['pending', 'published', 'completed']>;
+    jobStatus: Attribute.Enumeration<
+      ['pending', 'published', 'cancelled', 'completed']
+    >;
     applicant: Attribute.Relation<
       'api::job.job',
       'manyToMany',
       'api::applicant.applicant'
+    >;
+    company: Attribute.Relation<
+      'api::job.job',
+      'manyToMany',
+      'api::company.company'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;

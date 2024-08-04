@@ -70,6 +70,7 @@
       "enum": [
         "pending",
         "published",
+        "cancelled",
         "completed"
       ]
     },
@@ -77,6 +78,12 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::applicant.applicant",
+      "mappedBy": "job"
+    },
+    "company": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::company.company",
       "mappedBy": "job"
     }
   }

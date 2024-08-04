@@ -22,6 +22,7 @@ export default factories.createCoreController("api::job.job", ({ strapi }) => ({
             jobDescription: data?.jobDescription,
             salaryRange: data?.salaryRange,
             jobStatus: "pending",
+            company: data?.companyId,
           },
         });
       } else {
@@ -117,6 +118,28 @@ export default factories.createCoreController("api::job.job", ({ strapi }) => ({
       }
     } catch (err) {
       throw new ApplicationError(err.message);
+    }
+  },
+
+  async candidateAppliedJobs(ctx) {
+    const { userId } = ctx.query;
+    console.log("userId...", userId);
+
+    if (userId) {
+      const appliedJobs = await strapi.entityService.findMany("api::job.job", {
+        filters: {
+          applicant: {
+            user: {
+              id: userId,
+            },
+          },
+        },
+      });
+      ctx.body = {
+        success: true,
+        message: `Applicant jobs for candidate`,
+        data: appliedJobs,
+      };
     }
   },
 }));
