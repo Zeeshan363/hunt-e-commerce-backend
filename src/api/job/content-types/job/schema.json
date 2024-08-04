@@ -64,6 +64,20 @@
         "Dollar 120k-150k",
         "Dollar 151k-200k"
       ]
+    },
+    "jobStatus": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "published",
+        "completed"
+      ]
+    },
+    "applicant": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::applicant.applicant",
+      "mappedBy": "job"
     }
   }
 }

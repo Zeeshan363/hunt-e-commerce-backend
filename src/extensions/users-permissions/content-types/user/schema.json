@@ -82,6 +82,12 @@
         "Company"
       ],
       "required": true
+    },
+    "applicant": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::applicant.applicant",
+      "mappedBy": "user"
     }
   }
 }

@@ -362,114 +362,6 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiCandidateCandidate extends Schema.CollectionType {
-  collectionName: 'candidates';
-  info: {
-    singularName: 'candidate';
-    pluralName: 'candidates';
-    displayName: 'candidate';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    firstName: Attribute.String;
-    lastName: Attribute.String;
-    email: Attribute.Email;
-    phoneNumber: Attribute.BigInteger;
-    jobProposal: Attribute.Text;
-    candidateResume: Attribute.Media<'files'>;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::candidate.candidate',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::candidate.candidate',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiCompanyCompany extends Schema.CollectionType {
-  collectionName: 'companies';
-  info: {
-    singularName: 'company';
-    pluralName: 'companies';
-    displayName: 'company';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    companyName: Attribute.String;
-    companyTagline: Attribute.String;
-    category: Attribute.Enumeration<['Tech']>;
-    location: Attribute.String;
-    jobType: Attribute.Enumeration<['Onsite', 'Remote', 'Hybrid']>;
-    employeeCount: Attribute.Enumeration<
-      ['Emp 1-10', 'Emp 11-50', 'Emp 51-100', 'Emp 101-200']
-    >;
-    description: Attribute.Text;
-    companyLogo: Attribute.Media<'images', true>;
-    backgroundImage: Attribute.Media<'images'>;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::company.company',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::company.company',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiJobJob extends Schema.CollectionType {
-  collectionName: 'jobs';
-  info: {
-    singularName: 'job';
-    pluralName: 'jobs';
-    displayName: 'job';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    jobTitle: Attribute.String;
-    jobCategory: Attribute.Enumeration<['Design']>;
-    location: Attribute.String;
-    jobType: Attribute.Enumeration<['FULL-TIME', 'PART-TIME']>;
-    jobLevel: Attribute.Enumeration<
-      ['Internship', 'Entry Level', 'Associate', 'Mid Senor Level', 'Director']
-    >;
-    education: Attribute.String;
-    companyName: Attribute.String;
-    jobDescription: Attribute.Text;
-    companyLogo: Attribute.Media<'images'>;
-    salaryRange: Attribute.Enumeration<
-      ['Dollar 120k-150k', 'Dollar 151k-200k']
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::job.job', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<'api::job.job', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-  };
-}
-
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -837,6 +729,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       ['Admin', 'Manager', 'Candidate', 'Company']
     > &
       Attribute.Required;
+    applicant: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'manyToMany',
+      'api::applicant.applicant'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -901,6 +798,200 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
+export interface ApiApplicantApplicant extends Schema.CollectionType {
+  collectionName: 'applicants';
+  info: {
+    singularName: 'applicant';
+    pluralName: 'applicants';
+    displayName: 'applicant';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    user: Attribute.Relation<
+      'api::applicant.applicant',
+      'manyToMany',
+      'plugin::users-permissions.user'
+    >;
+    job: Attribute.Relation<
+      'api::applicant.applicant',
+      'manyToMany',
+      'api::job.job'
+    >;
+    applicantDetails: Attribute.Relation<
+      'api::applicant.applicant',
+      'oneToOne',
+      'api::applicant-detail.applicant-detail'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::applicant.applicant',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::applicant.applicant',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiApplicantDetailApplicantDetail
+  extends Schema.CollectionType {
+  collectionName: 'applicant_details';
+  info: {
+    singularName: 'applicant-detail';
+    pluralName: 'applicant-details';
+    displayName: 'applicantDetail';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    jobProposal: Attribute.Text;
+    uploadResume: Attribute.Media<'images'>;
+    applicant: Attribute.Relation<
+      'api::applicant-detail.applicant-detail',
+      'oneToOne',
+      'api::applicant.applicant'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::applicant-detail.applicant-detail',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::applicant-detail.applicant-detail',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiCandidateCandidate extends Schema.CollectionType {
+  collectionName: 'candidates';
+  info: {
+    singularName: 'candidate';
+    pluralName: 'candidates';
+    displayName: 'candidate';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    firstName: Attribute.String;
+    lastName: Attribute.String;
+    email: Attribute.Email;
+    phoneNumber: Attribute.BigInteger;
+    jobProposal: Attribute.Text;
+    candidateResume: Attribute.Media<'files'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::candidate.candidate',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::candidate.candidate',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiCompanyCompany extends Schema.CollectionType {
+  collectionName: 'companies';
+  info: {
+    singularName: 'company';
+    pluralName: 'companies';
+    displayName: 'company';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    companyName: Attribute.String;
+    companyTagline: Attribute.String;
+    category: Attribute.Enumeration<['Tech']>;
+    location: Attribute.String;
+    jobType: Attribute.Enumeration<['Onsite', 'Remote', 'Hybrid']>;
+    employeeCount: Attribute.Enumeration<
+      ['Emp 1-10', 'Emp 11-50', 'Emp 51-100', 'Emp 101-200']
+    >;
+    description: Attribute.Text;
+    companyLogo: Attribute.Media<'images', true>;
+    backgroundImage: Attribute.Media<'images'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::company.company',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::company.company',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiJobJob extends Schema.CollectionType {
+  collectionName: 'jobs';
+  info: {
+    singularName: 'job';
+    pluralName: 'jobs';
+    displayName: 'job';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    jobTitle: Attribute.String;
+    jobCategory: Attribute.Enumeration<['Design']>;
+    location: Attribute.String;
+    jobType: Attribute.Enumeration<['FULL-TIME', 'PART-TIME']>;
+    jobLevel: Attribute.Enumeration<
+      ['Internship', 'Entry Level', 'Associate', 'Mid Senor Level', 'Director']
+    >;
+    education: Attribute.String;
+    companyName: Attribute.String;
+    jobDescription: Attribute.Text;
+    companyLogo: Attribute.Media<'images'>;
+    salaryRange: Attribute.Enumeration<
+      ['Dollar 120k-150k', 'Dollar 151k-200k']
+    >;
+    jobStatus: Attribute.Enumeration<['pending', 'published', 'completed']>;
+    applicant: Attribute.Relation<
+      'api::job.job',
+      'manyToMany',
+      'api::applicant.applicant'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::job.job', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::job.job', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -911,9 +1002,6 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::candidate.candidate': ApiCandidateCandidate;
-      'api::company.company': ApiCompanyCompany;
-      'api::job.job': ApiJobJob;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
@@ -922,6 +1010,11 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
+      'api::applicant.applicant': ApiApplicantApplicant;
+      'api::applicant-detail.applicant-detail': ApiApplicantDetailApplicantDetail;
+      'api::candidate.candidate': ApiCandidateCandidate;
+      'api::company.company': ApiCompanyCompany;
+      'api::job.job': ApiJobJob;
     }
   }
 }

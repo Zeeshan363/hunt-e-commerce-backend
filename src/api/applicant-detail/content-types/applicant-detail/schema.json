@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "applicant_details",
+  "info": {
+    "singularName": "applicant-detail",
+    "pluralName": "applicant-details",
+    "displayName": "applicantDetail",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "jobProposal": {
+      "type": "text"
+    },
+    "uploadResume": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "applicant": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::applicant.applicant",
+      "inversedBy": "applicantDetails"
+    }
+  }
+}

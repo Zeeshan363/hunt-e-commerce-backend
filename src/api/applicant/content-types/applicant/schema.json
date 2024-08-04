@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "applicants",
+  "info": {
+    "singularName": "applicant",
+    "pluralName": "applicants",
+    "displayName": "applicant"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "applicant"
+    },
+    "job": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::job.job",
+      "inversedBy": "applicant"
+    },
+    "applicantDetails": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::applicant-detail.applicant-detail",
+      "mappedBy": "applicant"
+    }
+  }
+}
