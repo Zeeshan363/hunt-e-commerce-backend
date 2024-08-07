@@ -1,7 +1,7 @@
 import path from "path";
 
 export default ({ env }) => {
-  const client = env("DATABASE_CLIENT", "sqlite");
+  const client = env("DATABASE_CLIENT", "postgres"); // Assuming you're using postgres
 
   const connections = {
     mysql: {
@@ -56,6 +56,7 @@ export default ({ env }) => {
     postgres: {
       connection: {
         connectionString: env(
+          "DATABASE_URL",
           "postgresql://postgres:OdfPQiiMWpoigGCpsVoaOWDbRCKwGOwe@postgres.railway.internal:5432/railway"
         ),
         host: env("PGHOST", "postgres.railway.internal"),
@@ -63,10 +64,9 @@ export default ({ env }) => {
         database: env("PGDATABASE", "railway"),
         user: env("PGUSER", "postgres"),
         password: env("PGPASSWORD", "OdfPQiiMWpoigGCpsVoaOWDbRCKwGOwe"),
-        // ssl: env.bool("DATABASE_SSL", true) && {
-        //   rejectUnauthorized: env.bool("DATABASE_SSL_REJECT_UNAUTHORIZED", false),
-        // },
-        ssl: true,
+        ssl: {
+          rejectUnauthorized: false, // Allow self-signed certificates
+        },
         schema: env("DATABASE_SCHEMA", "public"),
       },
       pool: {
